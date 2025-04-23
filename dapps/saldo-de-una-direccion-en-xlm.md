@@ -28,5 +28,66 @@ Project name:\
 ◇ Select a variant:\
 │ [TypeScript + SWC](https://blog.nubecolectiva.com/que-significa-typescript-swc-en-vite-js/)
 
+A continuación entramos al directorio de Wallet balance y abrimos ese folder con visual studio code o tu editor favorito.
+
+Para darle un poco de estilo vamos a utilizar [Tailwind CSS](https://tailwindcss.com/)
+
+Lo que hacemos es seguir las instrucciones de la guia oficial , instalar [tailwind como plugin de vite](https://tailwindcss.com/docs/installation/using-vite). **Cómo estamos usando yarn, cambianos la instrucción de npm por yarn,  ya que no debemos mezclar manejadores de paquetes.**
+
+**1 Instalar tailwind**
+
+```bash
+ yarn add tailwindcss @tailwindcss/vite
+```
+
+**2 configurar el plugin en el archivo** vite.config.ts
+
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(),tailwindcss()],
+})
+```
+
+**3 Modificar el archivo index.css:**
+
+&#x20;Se ubica en la carpeta src.&#x20;
+
+Agregamos en la primera linea
+
+```css-extras
+@import "tailwindcss";
+```
+
+**4 Ensayando que todo esta bien instalado:**
+
+Dentro  de la  carpeta src,  modificamos el archivo App.tsx
+
+```jsx
+function App() {
+
+  return (
+    <>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
+    </>
+  )
+}
+
+export default App
+
+```
+
+
+
+
+
+
+
 
 
