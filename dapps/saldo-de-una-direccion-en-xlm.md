@@ -30,6 +30,25 @@ Project name:\
 
 A continuación entramos al directorio de Wallet balance y abrimos ese folder con visual studio code o tu editor favorito.
 
+Cambiamos el contenido del archivo index.html por lo siguiente:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stellar Balance</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+
+
 Para darle un poco de estilo vamos a utilizar [Tailwind CSS](https://tailwindcss.com/)
 
 Lo que hacemos es seguir las instrucciones de la guia oficial , instalar [tailwind como plugin de vite](https://tailwindcss.com/docs/installation/using-vite). **Cómo estamos usando yarn, cambianos la instrucción de npm por yarn,  ya que no debemos mezclar manejadores de paquetes.**
@@ -57,11 +76,27 @@ export default defineConfig({
 
 &#x20;Se ubica en la carpeta src.&#x20;
 
-Agregamos en la primera linea
-
-```css-extras
+```css
 @import "tailwindcss";
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 ```
+
+**Nota:** El resto del estilo en el css, lo podemos borrar
+
+
 
 **4 Ensayando que todo esta bien instalado:**
 
@@ -80,12 +115,19 @@ function App() {
 }
 
 export default App
-
 ```
 
+**5 Probando que todo esté funcionando correctamente.**
 
+Ejecutamos en la consola&#x20;
 
+```bash
+yarn run dev
+```
 
+Si todo sale bien debe salir así
+
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Tailwind en acción</p></figcaption></figure>
 
 
 
