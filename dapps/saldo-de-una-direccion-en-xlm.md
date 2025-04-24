@@ -4,130 +4,102 @@ A continuación vamos a realizar nuestro primer ejercicio en react  😃
 
 Consiste en realizar una conexión  usando la libreria de [Stellar-Wallets-Kit](https://stellarwalletskit.dev/) que nos permite integrarnos a varias billeteras y el uso del servicio api rest de[ stellar horizon ](https://developers.stellar.org/es/docs/data/apis/horizon) el cual ofrece varios servicios,  para este caso en particular la lectura de saldo de una dirección en particular.
 
-Como es un ejercicio de una sola página, vamos a usar Vite, que una herramienta ágil y sencilla para hacer [SPA](https://es.wikipedia.org/wiki/Single-page_application)
+Por recomendaciones de la documentación de react, como indican usar un framework, usaremos el de [Next.js](https://nextjs.org/) , que es uno de los más populares.
 
 ### <sub>**Creación del proyecto**</sub>
 
 <sub>Nos ubicamos en la ubicación que deseemos abrimos consola y ejecutamos:</sub>
 
 ```bash
-yarn create vite
+npx create-next-app@latest
 ```
 
 A continuación el prompt hace varias preguntas:
 
-Project name:\
-│ Wallet-Balance\
-│\
-◇ Package name:\
-│ wallet-balance\
-│\
-◇ Select a framework:\
-│ React\
-│\
-◇ Select a variant:\
-│ [TypeScript + SWC](https://blog.nubecolectiva.com/que-significa-typescript-swc-en-vite-js/)
-
-A continuación entramos al directorio de Wallet balance y abrimos ese folder con visual studio code o tu editor favorito.
-
-Cambiamos el contenido del archivo index.html por lo siguiente:
-
-```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stellar Balance</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+```bash
+√ What is your project named? ... wallet-balance
+√ Would you like to use TypeScript? ... No / Yes
+√ Would you like to use ESLint? ... No / Yes
+√ Would you like to use Tailwind CSS? ... No / Yes
+√ Would you like your code inside a src/ directory? ... No / Yes
+√ Would you like to use App Router? (recommended) ... No / Yes
+√ Would you like to use Turbopack for next dev? ... No / Yes
+√ Would you like to customize the import alias (@/* by default)? ... No / Yes
 ```
 
-
-
-Para darle un poco de estilo vamos a utilizar [Tailwind CSS](https://tailwindcss.com/)
-
-Lo que hacemos es seguir las instrucciones de la guia oficial , instalar [tailwind como plugin de vite](https://tailwindcss.com/docs/installation/using-vite). **Cómo estamos usando yarn, cambianos la instrucción de npm por yarn,  ya que no debemos mezclar manejadores de paquetes.**
-
-**1 Instalar tailwind**
+Entramos en la carpeta y en consola ponemos el siguiente comando:
 
 ```bash
- yarn add tailwindcss @tailwindcss/vite
+npm install @creit.tech/stellar-wallets-kit
 ```
 
-**2 configurar el plugin en el archivo** vite.config.ts
+Con esto ya tenemos todas instalaciones necesarias para este proyecto 😃
 
-```typescript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import tailwindcss from '@tailwindcss/vite'
+Abrimos  el directorio de wallet-balance  con visual studio code o tu editor favorito
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(),tailwindcss()],
-})
+Dentro de la carpeta src cambiamos el siguiente código en el archivo layout.tsx
+
+```tsx
+export const metadata: Metadata = {
+  title: "Wallet balance",
+  description: "Mi primera daap gracias a Stellar español",
+};
 ```
 
-**3 Modificar el archivo index.css:**
+También cambiamos el contenido del archivo page.tsx
 
-&#x20;Se ubica en la carpeta src.&#x20;
+```tsx
+// Archivo principal de la aplicación: muestra la interfaz principal y conecta los componentes clave
+// "use client" indica que este archivo se ejecuta del lado del cliente en Next.js
+'use client'
+import React, { useState } from "react";
+import WalletButton from "./components/WalletButton";
+import Balance from "./components/Balance";
 
-```css
-@import "tailwindcss";
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/**
+ * Componente principal Home
+ * Este componente representa la página principal de la aplicación.
+ * Permite al usuario conectar su wallet de Stellar y ver el saldo de su cuenta.
+ * Utiliza estados locales para manejar la conexión y la dirección de la cuenta.
+ */
+export default function Home() {
+  // Estado que indica si la wallet está conectada (true/false)
+  const [isConnected, setIsConnected] = useState(false);
+  // Estado que almacena la dirección pública de la cuenta Stellar conectada
+  const [address, setAddress] = useState<string | null>(null);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-```
-
-**Nota:** El resto del estilo en el css, lo podemos borrar
-
-
-
-**4 Ensayando que todo esta bien instalado:**
-
-Dentro  de la  carpeta src,  modificamos el archivo App.tsx
-
-```jsx
-function App() {
-
+  // Renderiza la interfaz principal de la aplicación
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      <main className="flex justify-center items-start min-h-screen bg-black py-12">
+        <div className="bg-black bg-opacity-90 rounded-xl shadow-[0_4px_32px_0_rgba(255,255,255,0.25)] border border-white/20 px-8 py-10 max-w-xl w-full text-center">
+          {/* Título principal */}
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">Bienvenido a Stellar en español</h1>
+          {/* Descripción de la aplicación */}
+          <p className="text-base md:text-lg text-gray-200">
+            Esta aplicación te permite consultar de forma rápida y sencilla el saldo de tu cuenta en la red Stellar. Conecta tu wallet y visualiza al instante cuántos XLM tienes disponibles en tu cuenta.
+          </p>
+          {/* Botón para conectar/desconectar la wallet */}
+          <WalletButton isConnected={isConnected} address={address} setIsConnected={setIsConnected} setAddress={setAddress} />
+          {/* Componente que muestra el saldo si la wallet está conectada */}
+          <Balance isConnected={isConnected} address={address} />
+          
+        </div>
+      </main>
+     
     </>
-  )
+  );
 }
 
-export default App
 ```
 
-**5 Probando que todo esté funcionando correctamente.**
+Como podemos ver la "magia" del programa está los  componentes:
 
-Ejecutamos en la consola&#x20;
+WalletButton:  Es el resposable de accesar a la billetera y saber su dirección
 
-```bash
-yarn run dev
-```
 
-Si todo sale bien debe salir así
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Tailwind en acción</p></figcaption></figure>
+
 
 
 
