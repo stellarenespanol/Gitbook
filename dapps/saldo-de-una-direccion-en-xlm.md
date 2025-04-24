@@ -233,9 +233,7 @@ const Balance: React.FC<BalanceProps> =  ({ isConnected, address }) => {
   // useEffect se ejecuta cada vez que cambian isConnected o address
   // Sirve para actualizar el saldo cuando la wallet se conecta o cambia de cuenta
   useEffect(() => {
-    // Mensaje en consola para depuración (puedes eliminarlo si no lo necesitas)
-    console.log('aquuuuu',isConnected, address);
-    // Si la wallet está conectada y hay dirección, consulta el saldo
+      // Si la wallet está conectada y hay dirección, consulta el saldo
     if (isConnected && address) {
       // Llama a la función GetBalance y actualiza el estado con el resultado
       GetBalance(address).then((result) => {
