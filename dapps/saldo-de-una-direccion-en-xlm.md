@@ -95,7 +95,10 @@ export default function Home() {
 
 Como podemos ver la "magia" del programa está los  componentes:
 
-WalletButton:  Es el resposable de accesar a la billetera y saber su dirección
+
+
+1. **WalletButton**:  Es el resposable de accesar a la billetera y saber su dirección
+2. **Balance:** una vez tenemos la dirección, mediante  el api rest de horizon, obtenemos el saldo.
 
 
 
