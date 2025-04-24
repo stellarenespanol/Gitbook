@@ -47,4 +47,3 @@
 
 * [dapps](dapps/README.md)
   * [Saldo de una dirección en XLM](dapps/saldo-de-una-direccion-en-xlm.md)
-  * [Saldo de una dirección en XLM y en USDC ](dapps/saldo-de-una-direccion-en-xlm-y-en-usdc.md)
