@@ -48,3 +48,5 @@
 * [dapps](dapps/README.md)
   * [Saldo de una dirección en XLM](dapps/saldo-de-una-direccion-en-xlm.md)
   * [get set helloworld](dapps/get-set-helloworld.md)
+  * [Votaciones](dapps/votaciones.md)
+  * [Adopcion de mascotas](dapps/adopcion-de-mascotas.md)
