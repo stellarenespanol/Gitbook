@@ -102,7 +102,7 @@ Como podemos ver la "magia" del programa está los  componentes:
 
 Dentro de la carpeta src/app creamos la carpeta utils y components
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption><p>Estructura de directorios sugerido</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Estructura de directorios sugerido</p></figcaption></figure>
 
 Dentro de components\
 Crear el archivo WalletButton.tsx
