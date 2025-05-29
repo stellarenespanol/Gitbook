@@ -78,6 +78,12 @@ sudo pacman -Syu
 sudo pacman -S base-devel
 ```
 
+#### Paso 7: Agregar lo siguiente a Rust, para poder generar archivos WebAssembly
+
+```batch
+rustup target add wasm32-unknown-unknown 
+```
+
 ### Instalación en Windows
 
 #### Paso 1: Descargar el instalador
