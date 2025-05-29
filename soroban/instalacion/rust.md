@@ -86,9 +86,9 @@ Visita la [página oficial de Rust](https://www.rust-lang.org/es/tools/install) 
 
 #### Paso 2: Ejecutar el instalador
 
-Ejecuta el archivo descargado y sigue las instrucciones en pantalla. Durante la instalación, es posible que se te pida instalar las **Visual Studio C++ Build Tools** (necesarias para compilar Rust en Windows).
+Ejecuta el archivo descargado y sigue las instrucciones en pantalla. Durante la instalación, es posible que se te pida instalar las **Visual Studio C++ Build Tools** (necesarias para compilar Rust en Windows). También debemos instalar el windows SDK acorde a la versión de windows que tengamos.
 
-<figure><img src="../../.gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Windows 11 SDK si tenemos Windows 11, Windows 10 SDK, si tenemos la versión 10 de Windows</p></figcaption></figure>
 
 #### Paso 3: Verificar la instalación
 
