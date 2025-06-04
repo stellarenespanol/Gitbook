@@ -80,8 +80,16 @@ sudo pacman -S base-devel
 
 #### Paso 7: Agregar lo siguiente a Rust, para poder generar archivos WebAssembly
 
-```batch
+_Si el rust es anterior a la versión 1.85_
+
+```bash
 rustup target add wasm32-unknown-unknown 
+```
+
+_Si el rust es igual o mayor a la versión 1.85_
+
+```bash
+rustup target add wasm32v1-none
 ```
 
 ### Instalación en Windows
@@ -106,9 +114,26 @@ rustc --version
 
 #### Paso 4: Agregamos los siguientes paquetes
 
+
+
 ```powershell
 rustup toolchain install stable-x86_64-pc-windows-gnu
 rustup default stable-x86_64-pc-windows-gnu
+
+```
+
+_Si el rust es anterior a la versión 1.85_
+
+```bash
 rustup target add wasm32-unknown-unknown 
+```
+
+_Si el rust es igual o mayor a la versión 1.85_
+
+```bash
+rustup target add wasm32v1-none
+```
+
+```
 ```
 
