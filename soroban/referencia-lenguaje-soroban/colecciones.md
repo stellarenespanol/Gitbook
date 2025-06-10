@@ -499,4 +499,4 @@ remove_map_entry *
 --key "key1"
 ```
 
-<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption><p>Ejecución de prueba</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>Ejecución de prueba</p></figcaption></figure>

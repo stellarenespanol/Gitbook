@@ -123,7 +123,7 @@ contract build
 cargo test -- --nocapture
 ```
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>resultado de la ejecución</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (7).png" alt=""><figcaption><p>resultado de la ejecución</p></figcaption></figure>
 
 #### 🧪 ¿Por qué se necesita `-- --nocapture`?
 

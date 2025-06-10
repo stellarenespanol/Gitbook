@@ -179,7 +179,7 @@ stellar contract deploy *
   --alias strings
 ```
 
-<figure><img src="../../.gitbook/assets/image (7).png" alt=""><figcaption><p>Ejecución de prueba</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (7) (1).png" alt=""><figcaption><p>Ejecución de prueba</p></figcaption></figure>
 
 **Pruebas del contrato**
 
