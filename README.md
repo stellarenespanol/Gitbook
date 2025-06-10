@@ -17,4 +17,5 @@ Este es tu nuevo punto de referencia en español para todo lo relacionado con **
 
 **Si deseas apoyar a esta iniciativa**
 
-<figure><img src=".gitbook/assets/image (71).png" alt="" width="106"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (71).png" alt="" width="212"><figcaption><p><a href="https://buymeacoffee.com/stellarespanol">https://buymeacoffee.com/stellarespanol</a></p></figcaption></figure>
+
