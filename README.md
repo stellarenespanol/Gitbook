@@ -12,3 +12,9 @@ Este es tu nuevo punto de referencia en español para todo lo relacionado con **
   Explora cómo utilizar herramientas web diseñadas para interactuar de manera fácil y rápida con tus contratos inteligentes. Desde la gestión de cuentas hasta la ejecución de transacciones, te mostramos todo lo que necesitas saber. 🌐🖱️
 * **Recursos en constante evolución:**\
   Nuestro portal se actualizará continuamente. A futuro, complementaremos esta información con fundamentos de Stellar, un blog con noticias y análisis, y muchos temas afines al universo Stellar. 🔄📈
+
+
+
+**Si deseas apoyar a esta iniciativa**
+
+<figure><img src=".gitbook/assets/image (71).png" alt="" width="106"><figcaption></figcaption></figure>
