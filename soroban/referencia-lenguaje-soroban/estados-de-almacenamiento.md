@@ -69,6 +69,8 @@ impl TokenContract {
 stellar contract build
 ```
 
+<figure><img src="../../.gitbook/assets/image (72).png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
+
 **Despliegue del contrato**&#x20;
 
 **Mac/Linux**
@@ -90,6 +92,8 @@ stellar contract deploy `
 --network testnet `
 --alias events
 ```
+
+<figure><img src="../../.gitbook/assets/image (73).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
 
 #### 2. 🏃‍♂️ **INSTANCE STORAGE** (Almacenamiento de Instancia)
 
