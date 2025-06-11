@@ -370,7 +370,11 @@ stellar contract deploy `
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Contrato desplegado</p></figcaption></figure>
 
-**Pruebas de ejecución y visualización de los eventos**\
+**Pruebas de ejecución y visualización de los eventos**
+
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+\
 **Empezando en valores iniciales el contrato**\
 stellar contract invoke \*\
 \--id \<CONTRACT\_ID> \*\
