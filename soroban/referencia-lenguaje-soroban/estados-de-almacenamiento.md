@@ -95,6 +95,23 @@ stellar contract deploy `
 
 <figure><img src="../../.gitbook/assets/image (73).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
 
+**Pruebas del contrato**
+
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+#### Función set\_balance
+
+```bash
+stellar contract invoke *
+--id <id contract> *
+--source developer *
+--network testnet *
+-- *
+set_balance *
+--user  wallet_address*
+--amount 1000000
+```
+
 #### 2. 🏃‍♂️ **INSTANCE STORAGE** (Almacenamiento de Instancia)
 
 **🧠 ¿Qué es?**
