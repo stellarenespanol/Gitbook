@@ -13,7 +13,7 @@ Nos dirijimos a [https://nodejs.org/es/download](https://nodejs.org/es/download)
 Abrimos la terminal y ejecutamos:
 
 ```bash
-nvm install 22.14.0 
+nvm install 22.16.0 
 ```
 
 _Está es la última version el 15 de Marzo de 2025_
