@@ -62,7 +62,7 @@ impl TokenContract {
 
 
 
-**Compilación del contrarto:**\
+**Compilación del contrato:**\
 
 
 ```bash
