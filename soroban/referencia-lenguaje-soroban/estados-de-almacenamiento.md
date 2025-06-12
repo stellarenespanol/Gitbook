@@ -112,6 +112,8 @@ set_balance *
 --amount 1000000
 ```
 
+<figure><img src="../../.gitbook/assets/image (74).png" alt=""><figcaption><p>Resultado del  llamado al contrato</p></figcaption></figure>
+
 #### 2. 🏃‍♂️ **INSTANCE STORAGE** (Almacenamiento de Instancia)
 
 **🧠 ¿Qué es?**
