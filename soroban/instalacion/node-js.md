@@ -16,6 +16,6 @@ Abrimos la terminal y ejecutamos:
 nvm install 22.16.0 
 ```
 
-_Está es la última version el 15 de Marzo de 2025_
+_Está es la última version el 12 de Junio de 2025_
 
 Fácil no? asi podemos instalar y gestionar varias versiones de Node js mucho más fácil 😊
