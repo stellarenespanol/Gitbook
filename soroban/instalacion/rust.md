@@ -122,9 +122,9 @@ rustup default stable-x86_64-pc-windows-gnu
 
 ```
 
-_Si el rust es anterior a la versión 1.85_
-
 Ejecutamos lo siguente para saver laversión de Rust:
+
+_Si el rust es anterior a la versión 1.85_
 
 ```bash
 rustc --version
