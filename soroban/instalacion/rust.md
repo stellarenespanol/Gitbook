@@ -74,7 +74,7 @@ sudo pacman -S base-devel
 
 #### Paso 6: Agregar lo siguiente a Rust, para poder generar archivos WebAssembly
 
-Ejecutamos:
+Ejecutamos lo siguente para saver laversión de Rust:
 
 ```bash
 rustc --version
