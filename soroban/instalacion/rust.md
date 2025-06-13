@@ -140,6 +140,3 @@ _Si el rust es igual o mayor a la versión 1.85_
 rustup target add wasm32v1-none
 ```
 
-```
-```
-
