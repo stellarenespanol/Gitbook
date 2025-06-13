@@ -41,13 +41,7 @@ Comprueba que Rust se instaló correctamente ejecutando:
 rustc --version
 ```
 
-#### Paso 5: Agregamos el siguiente paquete
-
-```bash
-rustup target add wasm32-unknown-unknown
-```
-
-#### Paso 6: Instalar un compilador de C (si es necesario)
+#### Paso 5: Instalar un compilador de C (si es necesario)
 
 Rust requiere un enlazador para compilar correctamente:
 
@@ -78,7 +72,7 @@ sudo pacman -Syu
 sudo pacman -S base-devel
 ```
 
-#### Paso 7: Agregar lo siguiente a Rust, para poder generar archivos WebAssembly
+#### Paso 6: Agregar lo siguiente a Rust, para poder generar archivos WebAssembly
 
 _Si el rust es anterior a la versión 1.85_
 

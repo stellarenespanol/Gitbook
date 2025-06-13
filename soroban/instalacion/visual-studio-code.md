@@ -6,7 +6,7 @@ description: >-
 
 # ✏️ Visual studio code
 
-**Deacarga del Visual studio code**
+**Descarga del Visual studio code**
 
 Ir al siguiente link [**https://code.visualstudio.com/Download**](https://code.visualstudio.com/Download)
 
