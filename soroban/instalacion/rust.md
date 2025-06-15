@@ -112,14 +112,9 @@ Abre una terminal (CMD o PowerShell) y ejecuta:
 rustc --version
 ```
 
-#### Paso 4: Agregamos los siguientes paquetes
-
-
+#### Paso 4:  Agregamos el paquete que genera el WebAsembly
 
 ```powershell
-rustup toolchain install stable-x86_64-pc-windows-gnu
-rustup default stable-x86_64-pc-windows-gnu
-
 ```
 
 Ejecutamos lo siguente para saver laversión de Rust:
