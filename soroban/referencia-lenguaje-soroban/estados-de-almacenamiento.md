@@ -288,61 +288,6 @@ stellar contract deploy *
 
 ***
 
-### 🛠️ Ejemplo Completo: Aplicación de Votación
-
-Veamos cómo usar los tres tipos en una aplicación real:
-
-```rust
-#![no_std]
-use soroban_sdk::{contract, contractimpl, symbol_short, Address, Env, String};
-
-#[contract]
-pub struct VotingContract;
-
-#[contractimpl]
-impl VotingContract {
-    // 💾 PERSISTENT: Votos finales (datos críticos)
-    pub fn cast_vote(env: Env, voter: Address, candidate: String) {
-        let vote_key = symbol_short!("vote");
-        // Los votos deben persistir para siempre 🗳️
-        env.storage()
-            .persistent()
-            .set(&(vote_key, voter), &candidate);
-    }
-    // 🏃‍♂️ INSTANCE: Configuración de la votación
-    pub fn setup_election(env: Env, title: String, end_time: u64) {
-        // Configuración que se consulta frecuentemente
-        env.storage()
-            .instance()
-            .set(&symbol_short!("title"), &title);
-        env.storage()
-            .instance()
-            .set(&symbol_short!("end_time"), &end_time);
-    }
-    // ⚡ TEMPORARY: Sistema anti-spam
-    pub fn vote_with_cooldown(env: Env, voter: Address, candidate: String) {
-        let cooldown_key = symbol_short!("cooldown");
-
-        // 🚫 Verificar cooldown temporal
-        if env
-            .storage()
-            .temporary()
-            .has(&(&cooldown_key, voter.clone()))
-        {
-            panic!("⏰ Debes esperar antes de votar de nuevo!");
-        }
-
-        // ⚡ Activar cooldown temporal (5 minutos)
-        env.storage()
-            .temporary()
-            .set(&(&cooldown_key, voter.clone()), &true);
-
-        // 💾 Registrar voto permanentemente
-        VotingContract::cast_vote(env, voter, candidate);
-    }
-}
-```
-
 ### 🎨 Consejos de Mejores Prácticas
 
 #### 💾 Para PERSISTENT:
@@ -363,9 +308,3 @@ impl VotingContract {
 * ✅ Sistema de cooldowns
 * ✅ Cache temporal
 * ❌ Evita para datos importantes
-
-***
-
-###
-
-**En proceso...**
