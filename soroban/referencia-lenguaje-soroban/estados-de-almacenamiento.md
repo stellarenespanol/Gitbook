@@ -134,6 +134,31 @@ Es el almacenamiento **intermedio** de Soroban. Los datos aquí duran bastante t
 * 🎮 Estados de juego que duran varias partidas
 * 📝 Información que se actualiza regularmente
 
-💡 Ejemplo Práctico:
+💡 **Ejemplo Práctico:**
+
+```rust
+#[contractimpl]
+impl TokenContract {
+    // 🏃‍♂️ Configuración del token (INSTANCE)
+    pub fn init_token(env: Env, name: String, symbol: String) {
+        // Metadatos que se usan frecuentemente pero pueden cambiar
+        env.storage().instance().set(&symbol_short!("name"), &name);
+        env.storage().instance().set(&symbol_short!("symbol"), &symbol);
+        env.storage().instance().set(&symbol_short!("decimals"), &7u32);
+    }
+    
+    pub fn get_name(env: Env) -> String {
+        env.storage().instance()
+            .get(&symbol_short!("name"))
+            .unwrap_or_else(|| String::from_str(&env, "Unknown Token"))
+    }
+    
+    // 🔄 Actualizar configuración
+    pub fn update_name(env: Env, new_name: String) {
+        env.storage().instance().set(&symbol_short!("name"), &new_name);
+        // ✨ Cada acceso renueva automáticamente el tiempo de vida
+    }
+}
+```
 
 **en proceso.....**
