@@ -344,7 +344,7 @@ Permite emitir un evento especial para marcar hitos del contador.
 stellar contract build
 ```
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
 
 **Despliegue del contrato**&#x20;
 
@@ -368,7 +368,7 @@ stellar contract deploy `
 --alias events
 ```
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Contrato desplegado</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Contrato desplegado</p></figcaption></figure>
 
 **Pruebas de ejecución y visualización de los eventos**
 

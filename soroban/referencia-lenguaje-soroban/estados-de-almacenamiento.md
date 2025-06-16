@@ -161,4 +161,54 @@ impl TokenContract {
 }
 ```
 
-**en proceso.....**
+**Compilación del contrato:**\
+
+
+```bash
+stellar contract build
+```
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
+
+**Despliegue del contrato**&#x20;
+
+**Mac/Linux**
+
+```bash
+stellar contract deploy \
+--wasm target\wasm32v1-none\release\instance.wasm
+--source developer \
+--network testnet \
+--alias events
+```
+
+**Windows**
+
+```bash
+stellar contract deploy `
+--wasm target\wasm32v1-none\release\instance.wasm `
+--source developer `
+--network testnet `
+--alias events
+```
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
+
+**Pruebas del contrato**
+
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+#### Función init\_token
+
+```bash
+stellar contract invoke *
+--id <id contract> *
+--source developer *
+--network testnet *
+-- *
+init_token *
+--name  "Stellar Espanol"*
+--symbol "SET"
+```
+
+<figure><img src="../../.gitbook/assets/image (75).png" alt=""><figcaption><p>Resultado del  llamado al contrato</p></figcaption></figure>
