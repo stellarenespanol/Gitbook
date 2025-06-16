@@ -212,3 +212,27 @@ init_token *
 ```
 
 <figure><img src="../../.gitbook/assets/image (75).png" alt=""><figcaption><p>Resultado del  llamado al contrato</p></figcaption></figure>
+
+#### 3. ⚡ **TEMPORARY STORAGE** (Almacenamiento Temporal)
+
+**🧠 ¿Qué es?**
+
+Es el almacenamiento **más barato y temporal** de Soroban. Los datos aquí se borran automáticamente después de un tiempo. Es como usar **notas adhesivas** 📝 para recordatorios rápidos.
+
+**✨ Características:**
+
+* ⏰ **Temporal**: Los datos se borran automáticamente (aprox. 24 horas)
+* 💰 **Más barato**: Ideal para optimizar costos
+* 🚀 **Rápido**: Perfecto para operaciones que no necesitan persistir
+* 🧹 **Auto-limpieza**: No necesitas borrar manualmente
+
+**🎯 ¿Cuándo usarlo?**
+
+* 🔢 Cálculos intermedios en transacciones complejas
+* 🎫 Nonces y tokens de sesión
+* 📊 Caché de datos temporales
+* 🔄 Estados de transacciones en progreso
+
+**💡 Ejemplo Práctico:**
+
+**En proceso...**
