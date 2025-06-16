@@ -73,24 +73,16 @@ stellar contract build
 
 **Despliegue del contrato**&#x20;
 
-**Mac/Linux**
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+
 
 ```bash
-stellar contract deploy \
---wasm target\wasm32v1-none\release\persistent.wasm \
---source developer \
---network testnet \
---alias events
-```
-
-**Windows**
-
-```bash
-stellar contract deploy `
---wasm target\wasm32v1-none\release\persistent.wasm `
---source developer `
---network testnet `
---alias events
+stellar contract deploy *
+--wasm target\wasm32v1-none\release\persistent.wasm *
+--source developer *
+--network testnet *
+--alias persistent
 ```
 
 <figure><img src="../../.gitbook/assets/image (73).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
@@ -172,24 +164,14 @@ stellar contract build
 
 **Despliegue del contrato**&#x20;
 
-**Mac/Linux**
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
 
 ```bash
-stellar contract deploy \
---wasm target\wasm32v1-none\release\instance.wasm
---source developer \
---network testnet \
---alias events
-```
-
-**Windows**
-
-```bash
-stellar contract deploy `
---wasm target\wasm32v1-none\release\instance.wasm `
---source developer `
---network testnet `
---alias events
+stellar contract deploy *
+--wasm target\wasm32v1-none\release\instance.wasm *
+--source developer *
+--network testnet *
+--alias instance
 ```
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
@@ -234,5 +216,156 @@ Es el almacenamiento **más barato y temporal** de Soroban. Los datos aquí se b
 * 🔄 Estados de transacciones en progreso
 
 **💡 Ejemplo Práctico:**
+
+```rust
+#![no_std]
+use soroban_sdk::{contract, contractimpl, symbol_short, vec, Address, Env, String, Vec};
+
+#[contract]
+pub struct TokenContract;
+
+#[contractimpl]
+impl TokenContract {
+    // ⚡ Operación de transferencia con estado temporal
+    pub fn transfer_with_memo(env: Env, from: Address, to: Address, amount: i128, memo: String) {
+        // 🔢 Guardamos temporalmente el ID de transacción
+        let tx_id = env.ledger().sequence();
+        let temp_key = symbol_short!("tx_temp");
+
+        // ⚡ Datos temporales para esta transacción
+        env.storage().temporary().set(
+            &(temp_key, tx_id),
+            &(from.clone(), to.clone(), amount, memo),
+        );
+
+        // Realizar la transferencia...
+        // Los datos temporales se borrarán automáticamente ✨
+    }
+
+    // 🎮 Sistema de cooldown temporal
+    pub fn use_special_ability(env: Env, user: Address) {
+        let cooldown_key = symbol_short!("cooldown");
+
+        // ⏰ Verificar si está en cooldown
+        if env.storage().temporary().has(&(&cooldown_key, user.clone())) {
+            panic!("🚫 Habilidad en cooldown!");
+        }
+
+        // ⚡ Activar cooldown temporal (se borra solo)
+        env.storage().temporary().set(&(cooldown_key, user), &true);
+
+        // Ejecutar habilidad especial...
+    }
+}
+```
+
+**Compilación del contrato:**\
+
+
+```bash
+stellar contract build
+```
+
+<figure><img src="../../.gitbook/assets/image (76).png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
+
+### **Despliegue del contrato**&#x20;
+
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+```bash
+stellar contract deploy *
+--wasm target\wasm32v1-none\release\temporary.wasm *
+--source developer *
+--network testnet *
+--alias temporary
+```
+
+<figure><img src="../../.gitbook/assets/image (77).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
+
+### 🎯 Comparación Rápida
+
+<table><thead><tr><th width="100.66668701171875">Aspecto</th><th>💾 Persistent</th><th>🏃‍♂️ Instance</th><th>⚡ Temporary</th></tr></thead><tbody><tr><td><strong>Duración</strong></td><td>♾️ Permanente</td><td>⏳ Semi-permanente</td><td>⏰ ~24 horas</td></tr><tr><td><strong>Costo</strong></td><td>💰💰💰 Alto</td><td>💰💰 Medio</td><td>💰 Bajo</td></tr><tr><td><strong>Uso ideal</strong></td><td>👤 Datos críticos</td><td>⚙️ Configuraciones</td><td>🔢 Cálculos temporales</td></tr><tr><td><strong>Auto-borrado</strong></td><td>❌ No</td><td>🔄 Si no se usa</td><td>✅ Automático</td></tr></tbody></table>
+
+***
+
+### 🛠️ Ejemplo Completo: Aplicación de Votación
+
+Veamos cómo usar los tres tipos en una aplicación real:
+
+```rust
+#![no_std]
+use soroban_sdk::{contract, contractimpl, symbol_short, Address, Env, String};
+
+#[contract]
+pub struct VotingContract;
+
+#[contractimpl]
+impl VotingContract {
+    // 💾 PERSISTENT: Votos finales (datos críticos)
+    pub fn cast_vote(env: Env, voter: Address, candidate: String) {
+        let vote_key = symbol_short!("vote");
+        // Los votos deben persistir para siempre 🗳️
+        env.storage()
+            .persistent()
+            .set(&(vote_key, voter), &candidate);
+    }
+    // 🏃‍♂️ INSTANCE: Configuración de la votación
+    pub fn setup_election(env: Env, title: String, end_time: u64) {
+        // Configuración que se consulta frecuentemente
+        env.storage()
+            .instance()
+            .set(&symbol_short!("title"), &title);
+        env.storage()
+            .instance()
+            .set(&symbol_short!("end_time"), &end_time);
+    }
+    // ⚡ TEMPORARY: Sistema anti-spam
+    pub fn vote_with_cooldown(env: Env, voter: Address, candidate: String) {
+        let cooldown_key = symbol_short!("cooldown");
+
+        // 🚫 Verificar cooldown temporal
+        if env
+            .storage()
+            .temporary()
+            .has(&(&cooldown_key, voter.clone()))
+        {
+            panic!("⏰ Debes esperar antes de votar de nuevo!");
+        }
+
+        // ⚡ Activar cooldown temporal (5 minutos)
+        env.storage()
+            .temporary()
+            .set(&(&cooldown_key, voter.clone()), &true);
+
+        // 💾 Registrar voto permanentemente
+        VotingContract::cast_vote(env, voter, candidate);
+    }
+}
+```
+
+### 🎨 Consejos de Mejores Prácticas
+
+#### 💾 Para PERSISTENT:
+
+* ✅ Usa para balances de usuarios
+* ✅ Datos que nunca deben perderse
+* ❌ Evita para datos temporales (caro)
+
+#### 🏃‍♂️ Para INSTANCE:
+
+* ✅ Configuraciones del contrato
+* ✅ Metadatos que cambian ocasionalmente
+* ❌ Evita para datos de usuarios individuales
+
+#### ⚡ Para TEMPORARY:
+
+* ✅ Cálculos intermedios
+* ✅ Sistema de cooldowns
+* ✅ Cache temporal
+* ❌ Evita para datos importantes
+
+***
+
+###
 
 **En proceso...**
