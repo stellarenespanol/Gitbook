@@ -36,7 +36,11 @@ Son errores que tú defines para tu lógica de negocio:
 **Result\<T, E> - Tu mejor amigo 🤝**
 
 ```rust
-rust// Tipo Result básicoResult<Valor_Exitoso, Tipo_de_Error>// En Soroban usamos principalmente:Result<ReturnType, Error>
+// Tipo Result básico
+Result<Valor_Exitoso, Tipo_de_Error>
+
+// En Soroban usamos principalmente:
+Result<ReturnType, Error>
 ```
 
 **Macros útiles 🎨**
@@ -63,12 +67,10 @@ Usa `?` para propagar errores de forma limpia
 
 Registra errores para facilitar el debugging
 
-***
+**💡 Ejemplos Prácticos:**
 
-### 💡 Ejemplos Prácticos: Paso a Paso
+#### 🌱 Ejemplo 0: Contrato Básico SIN Errores Personalizados
 
-#### 🏗️ Ejemplo 1: Contrato Básico con Errores Personalizados
-
-Este ejemplo muestra un contrato simple para gestionar un contador con validaciones:
+Empecemos con algo súper simple que usa solo los errores que Soroban ya tiene integrados:
 
 **En proceso...**
