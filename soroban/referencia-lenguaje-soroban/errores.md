@@ -185,4 +185,145 @@ impl SimpleContract {
 
 Este ejemplo muestra un contrato simple para gestionar un contador con validaciones:
 
-**En proceso...**
+```rust
+#![no_std]
+use soroban_sdk::{contract, contracttype, contractimpl, contracterror, Env, Symbol};
+
+// 📝 IMPORTANTE: Definir errores ANTES del contrato
+#[contracterror]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[repr(u32)]
+pub enum CounterError {
+    ValueTooHigh = 1,
+    Unauthorized = 2,
+    NotInitialized = 3,
+}
+
+#[contracttype]
+pub struct CounterData {
+    pub value: u32,
+    pub owner: Symbol,
+    pub max_value: u32,
+}
+
+#[contract]
+pub struct CounterContract;
+
+#[contractimpl]
+impl CounterContract {
+    
+    // ✅ FUNCIONA: Devuelve Result directamente
+    pub fn init(env: Env, owner: Symbol, max_value: u32) -> Result<(), CounterError> {
+        if max_value == 0 {
+            return Err(CounterError::ValueTooHigh);
+        }
+        
+        let data = CounterData {
+            value: 0,
+            owner,
+            max_value,
+        };
+        
+        env.storage().persistent().set(&Symbol::new(&env, "counter"), &data);
+        Ok(())
+    }
+    
+    // ✅ FUNCIONA: Manejo manual de errores
+    pub fn increment(env: Env, caller: Symbol, amount: u32) -> Result<u32, CounterError> {
+        
+        // Obtener datos
+        let data_key = Symbol::new(&env, "counter");
+        let mut data: CounterData = match env.storage().persistent().get(&data_key) {
+            Some(d) => d,
+            None => return Err(CounterError::NotInitialized),
+        };
+        
+        // Verificar permisos
+        if data.owner != caller {
+            return Err(CounterError::Unauthorized);
+        }
+        
+        // Verificar overflow
+        let new_value = match data.value.checked_add(amount) {
+            Some(v) => v,
+            None => return Err(CounterError::ValueTooHigh),
+        };
+        
+        // Verificar límite
+        if new_value > data.max_value {
+            return Err(CounterError::ValueTooHigh);
+        }
+        
+        // Actualizar
+        data.value = new_value;
+        env.storage().persistent().set(&data_key, &data);
+        
+        Ok(new_value)
+    }
+    
+    // ✅ FUNCIONA: Lectura simple
+    pub fn get_value(env: Env) -> Result<u32, CounterError> {
+        let data: CounterData = match env.storage().persistent().get(&Symbol::new(&env, "counter")) {
+            Some(d) => d,
+            None => return Err(CounterError::NotInitialized),
+        };
+        
+        Ok(data.value)
+    }
+}
+```
+
+#### **Lecciones Importantes del Ejemplo :**
+
+**1. Manejo de Estado Explícito 🎯**
+
+```rust
+// 🔍 Cada get() se maneja explícitamente
+let mut data: CounterData = match env.storage().persistent().get(&data_key) {
+    Some(d) => d,           // ✅ Datos encontrados
+    None => return Err(CounterError::NotInitialized),  // ❌ Error específico
+};
+```
+
+**2. Validaciones Paso a Paso 🛡️**
+
+```rust
+// 🔐 Validación 1: Permisos
+if data.owner != caller {
+    return Err(CounterError::Unauthorized);
+}
+
+// 🧮 Validación 2: Overflow
+let new_value = match data.value.checked_add(amount) {
+    Some(v) => v,
+    None => return Err(CounterError::ValueTooHigh),
+};
+
+// 📊 Validación 3: Límites de negocio
+if new_value > data.max_value {
+    return Err(CounterError::ValueTooHigh);
+}
+```
+
+**3. Errores Específicos y Útiles 📋**
+
+```rust
+#[contracterror]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[repr(u32)]
+pub enum CounterError {
+    ValueTooHigh = 1,    // 🚫 Para overflow O límites excedidos
+    Unauthorized = 2,    // 🔒 Para problemas de permisos
+    NotInitialized = 3,  // ❌ Para contrato no inicializado
+}
+```
+
+### 🎉 Conclusión
+
+El manejo de errores en Soroban es fundamental para crear contratos seguros y confiables. Recuerda:
+
+* 🎯 **Sé específico** con tus errores
+* 🛡️ **Valida todo** lo que puedas
+* 🧪 **Prueba** todos los escenarios
+* 📝 **Documenta** tu código
+* 🚀 **Itera** y mejora continuamente
