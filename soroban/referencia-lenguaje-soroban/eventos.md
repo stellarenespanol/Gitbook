@@ -368,7 +368,7 @@ stellar contract deploy `
 --alias events
 ```
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Contrato desplegado</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Contrato desplegado</p></figcaption></figure>
 
 **Pruebas de ejecución y visualización de los eventos**
 

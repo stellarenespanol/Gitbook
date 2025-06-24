@@ -107,3 +107,26 @@ Aunque el wizard es genial para empezar, **todavía tiene algunos errores** 🐛
 2. Tener instalado El cliente Stellar
 3. tener instalado el cliente de GIt
 
+
+
+* Copiar el repositorio de github de OpenZeppelin en una carpeta previamente seleccionada con la siguiente instrucción.
+
+```bash
+git clone https://github.com/OpenZeppelin/stellar-contracts.git
+```
+
+&#x20;
+
+* Con el editor favorito de código abrimos el folder stellar-contracts.
+* En el directorio raiz abrir el archivo Cargo.toml
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Vista breve del archivo Cargo.toml</p></figcaption></figure>
+
+Para cada ejemplo, por facilidad vamos a crear una subcarpeta &#x20;
+
+### Ejemplo:
+
+Vamos a crear el token MYT (My token).
+
+En proceso.....
+
