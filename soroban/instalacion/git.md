@@ -70,8 +70,6 @@ GitBucket es como el **rebelde cool**:
 
 ***
 
-***
-
 ## 💻 Git en Consola - Tu Nueva Herramienta Favorita
 
 Git es como el **motor** que hace funcionar todos estos repositorios. La consola (terminal) es donde ocurre la magia real. ¡No te asustes, es más fácil de lo que parece! 🪄
@@ -104,20 +102,19 @@ sudo port install git
 **Ubuntu/Debian (Los más comunes) 📦**
 
 ```bash
-bashsudo apt updatesudo apt install git
+sudo apt updatesudo apt install git
 ```
 
 **Fedora/Red Hat 🎩**
 
 ```bash
-bashsudo dnf install git
+sudo dnf install git
 ```
 
 **Arch Linux (Para los aventureros) 🏔️**
 
-```bash
-bashsudo pacman -S git
-```
+<pre class="language-bash"><code class="lang-bash"><strong>sudo pacman -S git
+</strong></code></pre>
 
 #### 🪟 **Para Windows**
 
