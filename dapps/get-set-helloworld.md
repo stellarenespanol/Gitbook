@@ -372,6 +372,6 @@ Para ejecutar el programa ejecutamos:
 npm run dev
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Programa en ejecución</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Programa en ejecución</p></figcaption></figure>
 
 Todo el proyecto esta en un repositorio[ github](https://github.com/stellarenespanol/get_set_hello_world.git)

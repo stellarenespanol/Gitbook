@@ -120,7 +120,7 @@ git clone https://github.com/OpenZeppelin/stellar-contracts.git
 * Con el editor favorito de código abrimos el folder stellar-contracts.
 * En el directorio raiz abrir el archivo Cargo.toml
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Vista breve del archivo Cargo.toml</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Vista breve del archivo Cargo.toml</p></figcaption></figure>
 
 Para cada ejemplo, por facilidad vamos a crear una subcarpeta &#x20;
 
@@ -128,5 +128,64 @@ Para cada ejemplo, por facilidad vamos a crear una subcarpeta &#x20;
 
 Vamos a crear el token MYT (My token).
 
-En proceso.....
+En el archivo Cargo.toml del directorio raiz. en members, agregamos&#x20;
 
+```
+"examples/myt"
+```
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+Dentro de la carpeta examples creamos la carpeta "myt"
+
+
+
+En el folder myt creamos el archivo Cargo.toml con lo siguiente
+
+```toml
+[package]
+name = "myt"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+version.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+doctest = false
+
+[dependencies]
+soroban-sdk = { workspace = true }
+stellar-access-control = { workspace = true }
+stellar-access-control-macros = { workspace = true }
+stellar-fungible = { workspace = true }
+stellar-default-impl-macro = { workspace = true }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
+```
+
+En el caso de ser un token fungible es con&#x20;
+
+```toml
+stellar-fungible = { workspace = true }
+```
+
+En el caso de ser un NFT se pone
+
+```toml
+stellar-non-fungible = { workspace = true }
+```
+
+Dentro de myt creamos una carpeta llamada src con los siguientes archivos:
+
+contract.rs ( Contrato del token)
+
+lib.rs ( archivo que engancha el contrato y su respectivo test)
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Estructura de la carpeta myt</p></figcaption></figure>
+
+
+
+En proceso....

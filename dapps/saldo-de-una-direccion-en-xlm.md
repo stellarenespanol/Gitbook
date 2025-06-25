@@ -102,7 +102,7 @@ Como podemos ver la "magia" del programa está los  componentes:
 
 Dentro de la carpeta src/app creamos la carpeta utils y components
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Estructura de directorios sugerido</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Estructura de directorios sugerido</p></figcaption></figure>
 
 Dentro de components\
 Crear el archivo WalletButton.tsx
@@ -305,6 +305,6 @@ Para ejecutar el programa ejecutamos:
 npm run dev
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>Ejecución del programa 😁</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption><p>Ejecución del programa 😁</p></figcaption></figure>
 
 Todo el proyecto esta en un repositorio[ github](https://github.com/stellarenespanol/Wallet-Balance.git)
