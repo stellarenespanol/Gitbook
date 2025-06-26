@@ -15,6 +15,7 @@
   * [🌐 Node Js](soroban/instalacion/node-js.md)
   * [✏️ Visual studio code](soroban/instalacion/visual-studio-code.md)
   * [📁 Git](soroban/instalacion/git.md)
+  * [💱 Freighter wallet](soroban/instalacion/freighter-wallet.md)
 * [Cliente Stellar](soroban/cliente-stellar/README.md)
   * [1️ Primeros pasos](soroban/cliente-stellar/primeros-pasos.md)
   * [2️ Segundos pasos](soroban/cliente-stellar/segundos-pasos.md)

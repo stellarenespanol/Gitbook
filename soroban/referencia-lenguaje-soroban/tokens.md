@@ -138,7 +138,7 @@ En el archivo Cargo.toml del directorio raiz. en members, agregamos&#x20;
 "examples/myt"
 ```
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 Dentro de la carpeta examples creamos la carpeta "myt"
 
