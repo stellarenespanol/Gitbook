@@ -124,9 +124,11 @@ git clone https://github.com/OpenZeppelin/stellar-contracts.git
 
 Para cada ejemplo, por facilidad vamos a crear una subcarpeta &#x20;
 
-### Ejemplo:
+### Ejemplo 1:
 
 Vamos a crear el token MYT (My token).
+
+MyToken usa la funcionalidad limitada ( _**capped**_ ) de un token fungible,  en esta ocasión la función _**set\_cap**_, en esta le indicamos cual es el maximo de monedas posibles a generar del token.
 
 En el archivo Cargo.toml del directorio raiz. en members, agregamos&#x20;
 
@@ -184,8 +186,226 @@ contract.rs ( Contrato del token)
 
 lib.rs ( archivo que engancha el contrato y su respectivo test)
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Estructura de la carpeta myt</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (78).png" alt=""><figcaption><p>Estructura para el token Myt</p></figcaption></figure>
 
+Escribimos lo siguiente dentro de lib.rs
 
+```rust
+#![no_std]
+pub mod contract;
+```
 
-En proceso....
+Código de contract.rs
+
+```rust
+use soroban_sdk::{contract, contractimpl, Address, Env, String};
+use stellar_fungible::{
+    capped::{check_cap, set_cap},
+    Base, FungibleToken,
+};
+
+#[contract]
+pub struct Myt;
+
+#[contractimpl]
+impl Myt {
+    pub fn __constructor(e: &Env, cap: i128) {
+        set_cap(e, cap);
+          Base::set_metadata(e, 18, String::from_str(e, "MyToken"), String::from_str(e, "MYT"));
+    }
+    pub fn mint(e: &Env, account: Address, amount: i128) {
+        check_cap(e, amount);
+        Base::mint(e, &account, amount);
+    }
+}
+
+#[contractimpl]
+impl FungibleToken for Myt {
+    type ContractType = Base;
+
+    fn total_supply(e: &Env) -> i128 {
+        Self::ContractType::total_supply(e)
+    }
+
+    fn balance(e: &Env, account: Address) -> i128 {
+        Self::ContractType::balance(e, &account)
+    }
+
+    fn allowance(e: &Env, owner: Address, spender: Address) -> i128 {
+        Self::ContractType::allowance(e, &owner, &spender)
+    }
+
+    fn transfer(e: &Env, from: Address, to: Address, amount: i128) {
+        Self::ContractType::transfer(e, &from, &to, amount);
+    }
+
+    fn transfer_from(e: &Env, spender: Address, from: Address, to: Address, amount: i128) {
+        Self::ContractType::transfer_from(e, &spender, &from, &to, amount);
+    }
+
+    fn approve(e: &Env, owner: Address, spender: Address, amount: i128, live_until_ledger: u32) {
+        Self::ContractType::approve(e, &owner, &spender, amount, live_until_ledger);
+    }
+
+    fn decimals(e: &Env) -> u32 {
+        Self::ContractType::decimals(e)
+    }
+
+    fn name(e: &Env) -> String {
+        Self::ContractType::name(e)
+    }
+
+    fn symbol(e: &Env) -> String {
+        Self::ContractType::symbol(e)
+    }
+}
+```
+
+## Explicación  del Contrato MyToken
+
+### ¿Qué es este contrato?
+
+Este es un **token fungible** (como una moneda digital) que funciona en la blockchain de Stellar. Piensa en él como crear tu propia criptomoneda, pero con reglas específicas que tú defines.
+
+### Estructura General del Código
+
+#### 1. Importaciones (Las herramientas que necesitamos)
+
+```rust
+use soroban_sdk::{contract, contractimpl, Address, Env, String};use stellar_fungible::{    capped::{check_cap, set_cap},    Base, FungibleToken,};
+```
+
+**¿Qué significa esto?**
+
+* `soroban_sdk`: Es como la "caja de herramientas" básica para crear contratos en Stellar
+* `stellar_fungible`: Son las funciones pre-construidas para crear tokens (como plantillas ya hechas)
+* `capped`: Funciones para limitar la cantidad máxima de tokens que se pueden crear
+
+#### 2. Definición del Contrato
+
+```rust
+#[contract]
+pub struct Myt;
+```
+
+**Explicación simple:**
+
+* `Myt` es el nombre de nuestro contrato (puedes cambiarlo por el que quieras)
+* `#[contract]` le dice a Stellar "esto es un contrato inteligente"
+* Es como crear una "fábrica" que va a producir tokens
+
+### Partes Más Importantes
+
+#### 🏗️ Constructor (La función que inicializa todo)
+
+```rust
+pub fn __constructor(e: &Env, cap: i128) {
+    set_cap(e, cap);   
+    Base::set_metadata(e, 18, String::from_str(e, "MyToken"), String::from_str(e, "MYT"));
+}
+```
+
+**¿Qué hace?**
+
+1. **`set_cap(e, cap)`**: Establece el límite máximo de tokens que se pueden crear
+   * Ejemplo: Si pones `cap = 1000000`, nunca se podrán crear más de 1 millón de tokens
+2. **`Base::set_metadata(...)`**: Define las características básicas del token:
+   * `18`: Decimales (como los centavos del peso, pero 18 lugares decimales)
+   * `"MyToken"`: El nombre completo del token
+   * `"MYT"`: El símbolo corto (como "USD" para dólares)
+
+**Analogía**: Es como registrar una nueva moneda en el banco central, definiendo su nombre, símbolo y cuántas unidades máximo pueden existir.
+
+#### 🪙 Función Mint (Crear nuevos tokens)
+
+```rust
+rustpub fn mint(e: &Env, account: Address, amount: i128) {    check_cap(e, amount);    Base::mint(e, &account, amount);}
+```
+
+**¿Qué hace?**
+
+1. **`check_cap(e, amount)`**: Verifica que no se exceda el límite máximo
+2. **`Base::mint(...)`**: Crea los tokens y los asigna a una cuenta específica
+
+**Analogía**: Es como una máquina impresora de billetes, pero que primero verifica que no imprimas más de lo permitido.
+
+#### 🔄 Implementación de FungibleToken (Las funciones estándar)
+
+Esta parte implementa todas las funciones que cualquier token debe tener:
+
+**Funciones de Consulta (Solo leen información):**
+
+* **`total_supply()`**: ¿Cuántos tokens existen en total?
+* **`balance()`**: ¿Cuántos tokens tiene una cuenta específica?
+* **`decimals()`**: ¿Cuántos decimales tiene el token?
+* **`name()`** y **`symbol()`**: ¿Cómo se llama el token?
+
+**Funciones de Transferencia:**
+
+* **`transfer()`**: Enviar tokens de una cuenta a otra
+* **`transfer_from()`**: Permitir que alguien más mueva tus tokens (con permiso previo)
+* **`approve()`**: Dar permiso a alguien para que use tus tokens
+* **`allowance()`**: ¿Cuántos tokens puede usar alguien en mi nombre?
+
+### ¿Por qué este diseño es inteligente?
+
+#### 1. **Reutilización de código**
+
+En lugar de escribir todas las funciones desde cero, usa `Base` que ya tiene todo implementado y probado.
+
+#### 2. **Seguridad con límites**
+
+La función `check_cap` asegura que nunca se puedan crear más tokens de los permitidos.
+
+#### 3. **Estándar compatible**
+
+Al implementar `FungibleToken`, tu token funciona con todas las aplicaciones que esperan tokens estándar.
+
+### Compilación del contrato
+
+Nos ubicamos dentro de ../stellar-contracts\examples\myt allí en consola ejecutamos:
+
+```bash
+cargo build --target wasm32-unknown-unknown --release
+```
+
+<figure><img src="../../.gitbook/assets/image (79).png" alt=""><figcaption><p>Resultado de una ejecución exitosa</p></figcaption></figure>
+
+### Despliegue del contrato
+
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+```bash
+stellar contract deploy *
+  --wasm ../../target/wasm32-unknown-unknown/release/myt.wasm *
+  --source developer *
+  --network testnet *
+  --alias MyTOken  *
+  -- *
+  --cap 1000000
+```
+
+<figure><img src="../../.gitbook/assets/image (80).png" alt=""><figcaption><p>Despliegue exitoso</p></figcaption></figure>
+
+<figure><img src="../../.gitbook/assets/image (82).png" alt=""><figcaption><p>Vista del contrato desplegado en testnet</p></figcaption></figure>
+
+Acá podemos ver que se llama al constuctor del contrato y estamos poniendo que el máximo de tokens son 1 millón.
+
+No obstante, a pesar que tenemos como máximo 1 millón, no hemos acuñado ninguna moneda.
+
+A continuación vamos a invocar la función mint
+
+```bash
+stellar contract invoke *
+--id <contract_id> *
+--source developer *
+--network testnet *
+-- *
+mint *
+--account <tu_cuenta_destino> *
+--amount 100000
+```
+
+<figure><img src="../../.gitbook/assets/image (83).png" alt=""><figcaption><p>Ejecución de mint</p></figcaption></figure>
+
+**En proceso....**
