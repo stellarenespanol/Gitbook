@@ -452,8 +452,271 @@ Al añadir el contrato del token vemos lo siguiente en nuestra billetera:
 
 ***
 
-### Ejemplo 2: _Un token sencillo, pero solo el dueño puede acuñarlo_
+### Ejemplo 2: _Un token sencillo, pero sólo el dueño puede acuñarlo_
 
 
 
-_En proceso....._
+_Lo primero que hacemos es copiar la carpeta myt y la renombramos con el nombre mytsf ( My Token Safe version)_
+
+_dentro de la carpeta mytsv cambiamos el contenido de name en el archivo Cargo.toml_
+
+```toml
+[package]
+name = "mytsv"
+```
+
+En la carpeta raiz agregamos en el archivo Cargo.toml dentro de members la carpeta que se acabo de crear
+
+```toml
+[workspace]
+resolver = "2"
+members = [
+    "examples/mytsv",   
+```
+
+El código en en contract.rs
+
+```rust
+use soroban_sdk::{contract, contractimpl, symbol_short, Address, Env, String, Symbol};
+use stellar_fungible::{
+    capped::{check_cap, set_cap},
+    Base, FungibleToken,
+};
+pub const OWNER: Symbol = symbol_short!("OWNER");
+
+#[contract]
+pub struct MyTSV;
+
+#[contractimpl]
+impl MyTSV {
+    pub fn __constructor(e: &Env, cap: i128, owner: Address) {
+        Base::set_metadata(e, 2, String::from_str(e, "My Token Safe  Version"), String::from_str(e, "MYTSV"));
+        set_cap(e, cap);
+        e.storage().instance().set(&OWNER, &owner);
+    }
+
+    pub fn mint(e: &Env, account: Address, amount: i128) {
+        check_cap(e, amount);
+        let owner: Address = e.storage().instance().get(&OWNER).expect("owner should be set");
+        owner.require_auth();
+        Base::mint(e, &account, amount);
+    }
+}
+
+#[contractimpl]
+impl FungibleToken for MyTSV {
+    type ContractType = Base;
+
+    fn total_supply(e: &Env) -> i128 {
+        Self::ContractType::total_supply(e)
+    }
+
+    fn balance(e: &Env, account: Address) -> i128 {
+        Self::ContractType::balance(e, &account)
+    }
+
+    fn allowance(e: &Env, owner: Address, spender: Address) -> i128 {
+        Self::ContractType::allowance(e, &owner, &spender)
+    }
+
+    fn transfer(e: &Env, from: Address, to: Address, amount: i128) {
+        Self::ContractType::transfer(e, &from, &to, amount);
+    }
+
+    fn transfer_from(e: &Env, spender: Address, from: Address, to: Address, amount: i128) {
+        Self::ContractType::transfer_from(e, &spender, &from, &to, amount);
+    }
+
+    fn approve(e: &Env, owner: Address, spender: Address, amount: i128, live_until_ledger: u32) {
+        Self::ContractType::approve(e, &owner, &spender, amount, live_until_ledger);
+    }
+
+    fn decimals(e: &Env) -> u32 {
+        Self::ContractType::decimals(e)
+    }
+
+    fn name(e: &Env) -> String {
+        Self::ContractType::name(e)
+    }
+
+    fn symbol(e: &Env) -> String {
+        Self::ContractType::symbol(e)
+    }
+}
+```
+
+## Explicación  del Contrato MyToken con Control de Propietario 🔐
+
+### Estructura General del Código
+
+#### 1. Importaciones (Las herramientas que necesitamos)
+
+```rust
+use soroban_sdk::{contract, contractimpl, symbol_short, Address, Env, String, Symbol};use stellar_fungible::{    capped::{check_cap, set_cap},    Base, FungibleToken,};
+```
+
+**¿Qué significa esto?**
+
+* `soroban_sdk`: Es como la "caja de herramientas" básica para crear contratos en Stellar
+* `stellar_fungible`: Son las funciones pre-construidas para crear tokens (como plantillas ya hechas)
+* `capped`: Funciones para limitar la cantidad máxima de tokens que se pueden crear
+* **🆕 `symbol_short`**: Para crear identificadores eficientes de datos en el contrato
+
+#### 2. Definición de Constantes (Los valores que no cambian)
+
+```rust
+rustpub const OWNER: Symbol = symbol_short!("OWNER");
+```
+
+**¿Qué es esto?**
+
+* Es como crear una "etiqueta" que identifica quién es el propietario del contrato
+* `symbol_short!("OWNER")`: Es una forma eficiente de almacenar esta información en Stellar
+* Piénsalo como la "llave maestra" del contrato 🗝️
+
+#### 2. Definición del Contrato
+
+```rust
+rust#[contract]pub struct MyTSV;
+```
+
+**Explicación simple:**
+
+* `MyTSV` es el nombre de nuestro contrato (cambió de `Myt` a `MyTSV`)
+* `#[contract]` le dice a Stellar "esto es un contrato inteligente"
+* Es como crear una "fábrica" que va a producir tokens
+
+### Partes Más Importantes
+
+#### 🏗️ Constructor (La función que inicializa todo) - ¡MEJORADO!
+
+```rust
+pub fn __constructor(e: &Env, cap: i128, owner: Address) {    Base::set_metadata(e, 2, String::from_str(e, "MyToken"), String::from_str(e, "MYT"));    set_cap(e, cap);    e.storage().instance().set(&OWNER, &owner);}
+```
+
+**¿Qué hace ahora?** 🎯
+
+1. **`Base::set_metadata(...)`**: Define las características básicas del token:
+   * `2`: Decimales ( como los centavos del peso)
+   * `"My Token Safe Version"`: El nombre completo del token (¡más descriptivo!)
+   * `"MYTSV"`: El símbolo corto (que coincide con el nombre del struct)
+2. **`set_cap(e, cap)`**: Establece el límite máximo de tokens que se pueden crear
+3. **🆕 `e.storage().instance().set(&OWNER, &owner)`**: **¡Esta es la parte nueva!**
+   * Guarda quién es el propietario del contrato en la blockchain
+   * Es como escribir en piedra quién tiene el control del contrato
+
+**Analogía**: Es como registrar una nueva moneda en el banco central, pero ahora también registras oficialmente quién es el director del banco que puede autorizar la impresión de nuevos billetes. 🏦
+
+### 🚨 CAMBIO IMPORTANTE: Control de Propietario
+
+#### 🪙 Función Mint (Crear nuevos tokens) - ¡AHORA MÁS SEGURA!
+
+```rust
+pub fn mint(e: &Env, account: Address, amount: i128) {   
+   let owner: Address = e.storage().instance().get(&OWNER).expect("owner should be set");   
+   owner.require_auth();    
+   check_cap(e, amount);
+   Base::mint(e, &account, amount);
+ }
+```
+
+**¿Qué hace ahora?** 🔍
+
+1. **🆕 `let owner: Address = e.storage().instance().get(&OWNER)...`**:
+   * Busca quién es el propietario registrado del contrato
+2. **🆕 `owner.require_auth()`**: **¡ESTA ES LA CLAVE!** 🔐
+   * Verifica que quien está llamando la función sea realmente el propietario
+   * Si no es el propietario, la transacción falla automáticamente
+3. **`check_cap(e, amount)`**: Verifica que no se exceda el límite máximo ✅
+4. **`Base::mint(...)`**: Solo si todo está bien, crea los tokens
+
+**Analogía**: Antes era como una máquina impresora de billetes que cualquiera podía usar. Ahora es como una máquina que requiere la huella dactilar del director del banco para funcionar. 👆
+
+### ¿Por qué es una EXCELENTE práctica? 🌟
+
+#### 🛡️ **Seguridad Crítica**
+
+**Antes**: Cualquier persona podía crear tokens nuevos
+
+```rust
+// ❌ Cualquiera podía hacer esto:contract.mint(mi_cuenta, 1_000_000); // ¡Crear un millón de tokens!
+```
+
+**Ahora**: Solo el propietario puede crear tokens
+
+```rust
+// ✅ Solo el owner puede hacer esto:contract.mint(cuenta_destino, 1000); // Y debe firmar la transacción
+```
+
+#### 💰 **Control de Inflación**
+
+* **Sin control**: Los tokens podrían volverse sin valor si cualquiera los crea
+* **Con control**: El propietario decide cuándo y cuántos tokens crear
+
+#### 🎯 **Casos de Uso Reales**
+
+1. **Token de empresa**: Solo el CEO puede autorizar nuevas emisiones
+2. **Token de recompensas**: Solo el sistema de la app puede crear tokens por logros
+3. **Token de comunidad**: Solo el comité puede crear tokens para nuevos miembros
+
+#### ⚖️ **Transparencia**
+
+* Todo el mundo puede ver quién es el propietario
+* Todas las operaciones de mint quedan registradas en la blockchain
+* La comunidad puede auditar quién y cuándo se crean nuevos tokens
+
+### Ejemplo de Ataque Prevenido 🚫
+
+**Escenario peligroso sin control de propietario:**
+
+```
+1. Hacker descubre el contrato.
+2. Llama a mint(su_cuenta, 999_999_999).
+3. Se vuelve millonario instantáneamente.
+4. El valor del token se colapsa.
+5. Todos los holders pierden dinero
+```
+
+**Con control de propietario:**
+
+```
+1. Hacker intenta llamar mint().
+2. El contrato verifica: "¿Eres el propietario?".
+3. Respuesta: "No".
+4. Transacción rechazada automáticamente ✋.
+5. El token mantiene su integridad
+```
+
+#### 🔄 Implementación de FungibleToken (Las funciones estándar)
+
+Esta parte implementa todas las funciones que cualquier token debe tener (sin cambios, pero ahora más seguro porque el mint está protegido):
+
+**Funciones de Consulta (Solo leen información):**
+
+* **`total_supply()`**: ¿Cuántos tokens existen en total?
+* **`balance()`**: ¿Cuántos tokens tiene una cuenta específica?
+* **`decimals()`**: ¿Cuántos decimales tiene el token?
+* **`name()`** y **`symbol()`**: ¿Cómo se llama el token?
+
+**Funciones de Transferencia:**
+
+* **`transfer()`**: Enviar tokens de una cuenta a otra
+* **`transfer_from()`**: Permitir que alguien más mueva tus tokens (con permiso previo)
+* **`approve()`**: Dar permiso a alguien para que use tus tokens
+* **`allowance()`**: ¿Cuántos tokens puede usar alguien en mi nombre?
+
+### ¿Por qué este diseño es inteligente? 🧠
+
+#### 1. **Reutilización de código**
+
+En lugar de escribir todas las funciones desde cero, usa `Base` que ya tiene todo implementado y probado.
+
+#### 2. **Seguridad multinivel** 🔒
+
+* **Nivel 1**: `check_cap` asegura que no se excedan los límites
+* **Nivel 2**: `require_auth` asegura que solo el propietario pueda crear tokens
+* **Nivel 3**: Todo queda registrado en la blockchain (inmutable y auditable)
+
+#### 3. **Estándar compatible**
+
+Al implementar `FungibleToken`, tu token funciona con todas las aplicaciones que esperan tokens estándar.
