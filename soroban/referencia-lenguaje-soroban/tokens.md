@@ -205,14 +205,15 @@ use stellar_fungible::{
 };
 
 #[contract]
-pub struct Myt;
+pub struct MyT;
 
 #[contractimpl]
-impl Myt {
+impl MyT {
     pub fn __constructor(e: &Env, cap: i128) {
+        Base::set_metadata(e, 2, String::from_str(e, "MyToken"), String::from_str(e, "MYT"));
         set_cap(e, cap);
-          Base::set_metadata(e, 18, String::from_str(e, "MyToken"), String::from_str(e, "MYT"));
     }
+
     pub fn mint(e: &Env, account: Address, amount: i128) {
         check_cap(e, amount);
         Base::mint(e, &account, amount);
@@ -220,7 +221,7 @@ impl Myt {
 }
 
 #[contractimpl]
-impl FungibleToken for Myt {
+impl FungibleToken for MyT {
     type ContractType = Base;
 
     fn total_supply(e: &Env) -> i128 {
@@ -300,19 +301,19 @@ pub struct Myt;
 
 ```rust
 pub fn __constructor(e: &Env, cap: i128) {
-    set_cap(e, cap);   
-    Base::set_metadata(e, 18, String::from_str(e, "MyToken"), String::from_str(e, "MYT"));
+   Base::set_metadata(e, 2, String::from_str(e, "MyToken"), String::from_str(e, "MYT"));
+    set_cap(e, cap); 
 }
 ```
 
 **¿Qué hace?**
 
-1. **`set_cap(e, cap)`**: Establece el límite máximo de tokens que se pueden crear
-   * Ejemplo: Si pones `cap = 1000000`, nunca se podrán crear más de 1 millón de tokens
-2. **`Base::set_metadata(...)`**: Define las características básicas del token:
-   * `18`: Decimales (como los centavos del peso, pero 18 lugares decimales)
+1. **`Base::set_metadata(...)`**: Define las características básicas del token:
+   * 2: Decimales (como los centavos de las monedas)
    * `"MyToken"`: El nombre completo del token
    * `"MYT"`: El símbolo corto (como "USD" para dólares)
+2. **`set_cap(e, cap)`**: Establece el límite máximo de tokens que se pueden crear
+   * Ejemplo: Si pones `cap = 1000000`, nunca se podrán crear más de 1 millón de tokens
 
 **Analogía**: Es como registrar una nueva moneda en el banco central, definiendo su nombre, símbolo y cuántas unidades máximo pueden existir.
 
@@ -380,10 +381,12 @@ stellar contract deploy *
   --wasm ../../target/wasm32-unknown-unknown/release/myt.wasm *
   --source developer *
   --network testnet *
-  --alias MyTOken  *
+  --alias MyToken  *
   -- *
-  --cap 1000000
+  --cap 100000000
 ```
+
+**Nota:**&#x50;ara un millón o cualquier cifra se ponen 2  ceros de más que son los centavos
 
 <figure><img src="../../.gitbook/assets/image (80).png" alt=""><figcaption><p>Despliegue exitoso</p></figcaption></figure>
 
@@ -406,6 +409,39 @@ mint *
 --amount 100000
 ```
 
-<figure><img src="../../.gitbook/assets/image (83).png" alt=""><figcaption><p>Ejecución de mint</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (84).png" alt=""><figcaption><p>Resultado de la operación</p></figcaption></figure>
 
-**En proceso....**
+Para ver el  balance
+
+```bash
+stellar contract invoke *
+--id <contract_id> *
+--source developer *
+--network testnet *
+-- balance
+--account <cuenta_a_verificar>
+```
+
+<figure><img src="../../.gitbook/assets/image (85).png" alt=""><figcaption><p>Resultado de la operación</p></figcaption></figure>
+
+Si queremos ver el  saldo de una forma visual en nuestra billetera 😃
+
+Primero ejecutamos el siguiente comando
+
+```bash
+stellar keys secret <alias-de-cuenta>
+```
+
+En nuetos caso el alias de cuenta o entidad es **developer,** mandamos a descansar a Bob o Alice 😉\
+\
+Esto nos da la  llave secreta, esta llave secreta la añadimos en nuestra billetera favorita, en nuestro caso la billetera freigther
+
+<figure><img src="../../.gitbook/assets/image (86).png" alt=""><figcaption></figcaption></figure>
+
+Una vez importada la billetera importamos el  contrato de token
+
+<figure><img src="../../.gitbook/assets/image (87).png" alt=""><figcaption></figcaption></figure>
+
+Al añadir el contrato del token vemos lo siguiente en nuestra billetera:
+
+<figure><img src="../../.gitbook/assets/image (88).png" alt=""><figcaption></figcaption></figure>
