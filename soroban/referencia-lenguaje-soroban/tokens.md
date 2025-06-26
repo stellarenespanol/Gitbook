@@ -720,3 +720,66 @@ En lugar de escribir todas las funciones desde cero, usa `Base` que ya tiene tod
 #### 3. **Estándar compatible**
 
 Al implementar `FungibleToken`, tu token funciona con todas las aplicaciones que esperan tokens estándar.
+
+
+
+### Compilación del contrato
+
+Nos ubicamos dentro de ../stellar-contracts\examples\mytsv allí en consola ejecutamos:
+
+```bash
+cargo build --target wasm32-unknown-unknown --release
+```
+
+<figure><img src="../../.gitbook/assets/image (89).png" alt=""><figcaption><p>Retorno de la operación</p></figcaption></figure>
+
+### Despliegue del contrato
+
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+```bash
+stellar contract deploy *
+  --wasm ../../target/wasm32-unknown-unknown/release/mytsv.wasm *
+  --source developer *
+  --network testnet *
+  --alias MyTokenSafeVersion  *
+  -- *
+  --cap 100000000 *
+  --owner <owner_address>
+```
+
+**Nota:**&#x50;ara un millón o cualquier cifra se ponen 2  ceros de más que son los centavos
+
+<figure><img src="../../.gitbook/assets/image (90).png" alt=""><figcaption><p>resultado de la operación</p></figcaption></figure>
+
+### Haciendo un mint con una cuenta no valida
+
+```bash
+stellar contract invoke `
+--id MyTokenSafeVersion `
+--source <otra cuenta> `
+--network testnet `
+-- `
+mint `
+--account <otra cuenta> `
+--amount 100000
+```
+
+<figure><img src="../../.gitbook/assets/image (91).png" alt=""><figcaption><p>Error al no ser el dueño de la cuenta</p></figcaption></figure>
+
+### Haciendo un mint con una cuenta valida
+
+```
+stellar contract invoke `
+--id MyTokenSafeVersion `
+--source <cuenta owner> `
+--network testnet `
+-- `
+mint `
+--account <cuenta destino> `
+--amount 100000
+```
+
+<figure><img src="../../.gitbook/assets/image (92).png" alt=""><figcaption><p>Resultado de la operación</p></figcaption></figure>
+
+⚠️ **OJO:** Si eres detallista, ves  que se revela la wallet del owner 🙈, esto lo podemos solucionar, si comparamos la billetera que nos envian si es la misma del  owner 😉, si es la misma ok, si no es la misma mensaje de error. Además de  la instruccion de la  verificación si la firma digital es del owner  _**owner.require\_auth()**_.&#x20;
