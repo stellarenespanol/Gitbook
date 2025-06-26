@@ -445,3 +445,5 @@ Una vez importada la billetera importamos el  contrato de token
 Al añadir el contrato del token vemos lo siguiente en nuestra billetera:
 
 <figure><img src="../../.gitbook/assets/image (88).png" alt=""><figcaption></figcaption></figure>
+
+⚠️ **OJO:** Si eres detallista, ves un agujero ENORME de seguridad, cualquiera puede hacer la operación de mint, este ejemplo sólo ha sido con fines ilustrativos
