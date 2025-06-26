@@ -124,7 +124,9 @@ git clone https://github.com/OpenZeppelin/stellar-contracts.git
 
 Para cada ejemplo, por facilidad vamos a crear una subcarpeta &#x20;
 
-### Ejemplo 1:
+***
+
+### Ejemplo 1: _Un token sencillo_
 
 Vamos a crear el token MYT (My token).
 
@@ -446,4 +448,12 @@ Al añadir el contrato del token vemos lo siguiente en nuestra billetera:
 
 <figure><img src="../../.gitbook/assets/image (88).png" alt=""><figcaption></figcaption></figure>
 
-⚠️ **OJO:** Si eres detallista, ves un agujero ENORME de seguridad, cualquiera puede hacer la operación de mint, este ejemplo sólo ha sido con fines ilustrativos
+⚠️ **OJO:** Si eres detallista, ves un agujero ENORME de seguridad, cualquiera puede hacer la operación de mint, este ejemplo sólo ha sido con fines ilustrativos 😅.
+
+***
+
+### Ejemplo 2: _Un token sencillo, pero solo el dueño puede acuñarlo_
+
+
+
+_En proceso....._
