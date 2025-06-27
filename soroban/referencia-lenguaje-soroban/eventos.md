@@ -344,7 +344,7 @@ Permite emitir un evento especial para marcar hitos del contador.
 stellar contract build
 ```
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
 
 **Despliegue del contrato**&#x20;
 
@@ -368,7 +368,7 @@ stellar contract deploy `
 --alias events
 ```
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Contrato desplegado</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Contrato desplegado</p></figcaption></figure>
 
 **Pruebas de ejecución y visualización de los eventos**
 
@@ -386,7 +386,7 @@ initialize \*\
 \--creator "developer"\
 
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p>Resultado de la ejecución</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Resultado de la ejecución</p></figcaption></figure>
 
 **Podemos ver algo nuevo en el resultado**
 
@@ -412,7 +412,7 @@ Si nos vamos al explorador y miramos [la última transacción](https://stellar.e
 
 podemos ver lo siguiente:
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption><p>Visualización en el explorador</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1).png" alt=""><figcaption><p>Visualización en el explorador</p></figcaption></figure>
 
 Vemos que función se llamó y con que parámetros
 
@@ -424,7 +424,7 @@ También observamos evento en la parte de "raised event"  con el contenido que l
 
 **1** por[ lumenscan](https://testnet.lumenscan.io/) sacamos el ledger donde está la operación:, esto lo obtenemos por el historial de operacione del contrato y con que billetera interactuó.  En esta caso la billetera "developer"
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption><p>ledger <a href="https://testnet.lumenscan.io/ledgers/1420216">1420216</a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (1).png" alt=""><figcaption><p>ledger <a href="https://testnet.lumenscan.io/ledgers/1420216">1420216</a></p></figcaption></figure>
 
 **2** en la consola ejecutamos:\
 
@@ -433,6 +433,6 @@ También observamos evento en la parte de "raised event"  con el contenido que l
 stellar events --network testnet --start-ledger 1420216
 ```
 
-<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption><p>Resultados de la operación</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>Resultados de la operación</p></figcaption></figure>
 
 Si vemos la parte Value vemos ambos valores del evento el 42 y el valor developer.

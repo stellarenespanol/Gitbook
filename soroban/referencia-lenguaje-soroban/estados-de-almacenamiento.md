@@ -160,7 +160,7 @@ impl TokenContract {
 stellar contract build
 ```
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>Resultado de la compilación</p></figcaption></figure>
 
 **Despliegue del contrato**&#x20;
 
@@ -174,7 +174,7 @@ stellar contract deploy *
 --alias instance
 ```
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Resultado del despliegue</p></figcaption></figure>
 
 **Pruebas del contrato**
 

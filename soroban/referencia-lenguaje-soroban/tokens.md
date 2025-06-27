@@ -120,7 +120,7 @@ git clone https://github.com/OpenZeppelin/stellar-contracts.git
 * Con el editor favorito de código abrimos el folder stellar-contracts.
 * En el directorio raiz abrir el archivo Cargo.toml
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Vista breve del archivo Cargo.toml</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Vista breve del archivo Cargo.toml</p></figcaption></figure>
 
 Para cada ejemplo, por facilidad vamos a crear una subcarpeta &#x20;
 
@@ -138,7 +138,7 @@ En el archivo Cargo.toml del directorio raiz. en members, agregamos&#x20;
 "examples/myt"
 ```
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Dentro de la carpeta examples creamos la carpeta "myt"
 
