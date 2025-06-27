@@ -33,7 +33,7 @@
   * [Errores](soroban/referencia-lenguaje-soroban/errores.md)
   * [Tokens](soroban/referencia-lenguaje-soroban/tokens.md)
   * [NFT](soroban/referencia-lenguaje-soroban/nft.md)
-  * [Autenticacion](soroban/referencia-lenguaje-soroban/autenticacion.md)
+  * [Autenticación](soroban/referencia-lenguaje-soroban/autenticacion.md)
   * [Pruebas](soroban/referencia-lenguaje-soroban/pruebas.md)
   * [Interconectar  Contratos](soroban/referencia-lenguaje-soroban/interconectar-contratos.md)
 * [Contratos ejemplo](soroban/contratos-ejemplo/README.md)
