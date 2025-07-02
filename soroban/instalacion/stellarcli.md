@@ -49,6 +49,8 @@ tar -xvf stellar-cli-22.8.1-x86_64-unknown-linux-gnu.tar.gz
 tar -xvf stellar-cli-22.8.1-aarch64-unknown-linux-gnu.tar.gz
 ```
 
+_<mark style="color:yellow;">**La versión 22.8.1 es la última versión que se revisó hasta el 2025/06/01**</mark>_
+
 Crea un alias con el binario para que se ejecute en terminal con el comando stellar
 
 ```bash
