@@ -22,14 +22,20 @@ Vamos a la pagina de releases [https://github.com/stellar/stellar-cli/releases/]
 **busca el binario corresponidente a la  arquitectura de tu ordenador \[arch64 o x86\_64]**
 {% endhint %}
 
+Para saber la versión de Linux corremos el siguiente comando:
+
+```bash
+lsb_release -a
+```
+
 
 
 <pre class="language-bash"><code class="lang-bash"># Caso de x86_64
-wget https://github.com/stellar/stellar-cli/releases/download/v22.6.0/stellar-cli-22.6.0-x86_64-unknown-linux-gnu.tar.gz
+wget https://github.com/stellar/stellar-cli/releases/download/v22.8.1/stellar-cli-22.8.1-x86_64-unknown-linux-gnu.tar.gz
 
 # Caso de arch64
 
-wget https://github.com/stellar/stellar-cli/releases/download/v22.6.0/stellar-cli-22.6.0-aarch64-unknown-linux-gnu.tar.gz 
+wget https://github.com/stellar/stellar-cli/releases/download/v22.8.1/stellar-cli-22.8.1-aarch64-unknown-linux-gnu.tar.gz
 <strong>
 </strong></code></pre>
 
@@ -37,10 +43,10 @@ Descomprime el archivo&#x20;
 
 ```bash
 #caso x86_64
-tar -xvf stellar-cli-22.6.0-x86_64-unknown-linux-gnu.tar.gz
+tar -xvf stellar-cli-22.8.1-x86_64-unknown-linux-gnu.tar.gz
 
 # Caso de arch64
-tar -xvf stellar-cli-22.6.0-aarch64-unknown-linux-gnu.tar.gz
+tar -xvf stellar-cli-22.8.1-aarch64-unknown-linux-gnu.tar.gz
 ```
 
 Crea un alias con el binario para que se ejecute en terminal con el comando stellar
@@ -57,7 +63,7 @@ stellar --version
 
 ***
 
-**⚠️ Nota si se usa un buntu 24.XXX ejecutar las siguientes instrucciones**
+**⚠️ Nota si se usa un buntu&#x20;**<mark style="color:red;">**20.04.6 e inferiores**</mark> **ejecutar las siguientes instrucciones**
 
 ```bash
 sudo nano /etc/apt/sources.list.d/jammy.list
