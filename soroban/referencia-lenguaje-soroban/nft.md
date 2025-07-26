@@ -370,7 +370,89 @@ pub fn __constructor(e: &Env, owner: Address) {
    * `"NFTKN"`: símbolo del token.
    * `"CID"`: Dirección de contenido (por ejemplo, un enlace IPFS con más datos visuales o técnicos del NFT).
 
-EN PROCESO...
+### 🧯 5. Función batch\_mint (minteo en lote)
+
+```rust
+fn batch_mint(e: &Env, to: Address, amount: u32) -> u32 {
+    let owner: Address = e.storage().instance().get(...).expect(...);
+    owner.require_auth();
+    Consecutive::batch_mint(e, &to, amount)
+}
+```
+
+#### ¿Qué hace?
+
+* Solo el **dueño original** del contrato puede mintear NFTs.
+* Permite crear varios NFTs (según el `amount`) de forma eficiente.
+* Usa la función `batch_mint` del módulo `Consecutive`.
+
+💡 _Ejemplo:_\
+Si llamas `batch_mint(to, 5)`, se crean 5 NFTs y se asignan al usuario `to`.
+
+### 🧾 6. Implementación estándar de NonFungibleToken
+
+Esta parte define todas las funciones necesarias para que el NFT funcione según los estándares:
+
+```rust
+impl NonFungibleToken for mynft {
+    ...
+}
+```
+
+#### ¿Qué funciones se incluyen?
+
+🔎 **Consultas:**
+
+* `balance()`: ¿Cuántos NFTs tiene un usuario?
+* `owner_of(token_id)`: ¿Quién es el dueño de un NFT específico?
+* `name()`, `symbol()`, `token_uri(token_id)`: Metadata del NFT.
+
+🔄 **Transferencias:**
+
+* `transfer()`: Transferir un NFT.
+* `transfer_from()`: Transferencia con aprobación previa.
+* `approve()`, `approve_for_all()`: Dar permisos a otros.
+* `get_approved()`, `is_approved_for_all()`: Consultar permisos.
+
+***
+
+### 🔥 7. Funciones para quemar NFTs (Burnable)
+
+```rust
+impl NonFungibleBurnable for mynft {
+    fn burn(...);
+    fn burn_from(...);
+}
+```
+
+#### ¿Qué hacen?
+
+* `burn(from, token_id)`: El dueño puede destruir su NFT.
+* `burn_from(spender, from, token_id)`: Un tercero autorizado puede quemar un NFT en nombre del dueño.
+
+💡 _Esto sirve para eliminar NFTs obsoletos o por decisión del usuario._
+
+***
+
+### ✅ 8. Consecutive extension
+
+```rust
+impl NonFungibleConsecutive for mynft {}
+```
+
+Esto indica que el contrato utiliza el módulo _Consecutive_, que permite:
+
+* Mintear muchos NFTs seguidos.
+* Optimizar almacenamiento y eficiencia.
+
+***
+
+### 🧠 Analogía general
+
+* Piensa en este contrato como una **fábrica de obras de arte digitales** que puede crear muchas piezas a la vez, entregarlas a quien tú quieras, y también destruirlas si ya no quieres que existan.
+* Todo está bajo el control del **creador original (owner)**.
+
+
 
 
 
