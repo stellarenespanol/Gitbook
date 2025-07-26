@@ -452,7 +452,7 @@ Esto indica que el contrato utiliza el módulo _Consecutive_, que permite:
 * Piensa en este contrato como una **fábrica de obras de arte digitales** que puede crear muchas piezas a la vez, entregarlas a quien tú quieras, y también destruirlas si ya no quieres que existan.
 * Todo está bajo el control del **creador original (owner)**.
 
-
+**EN PROCESO**
 
 
 
