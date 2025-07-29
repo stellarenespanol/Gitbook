@@ -366,7 +366,7 @@ Al implementar `FungibleToken`, tu token funciona con todas las aplicaciones que
 
 ### Compilación del contrato
 
-Nos ubicamos dentro de ../stellar-contracts\examples\myt allí en consola ejecutamos:
+Nos ubicamos dentro de ../stellar-contracts/examples/myt allí en consola ejecutamos:
 
 ```bash
 cargo build --target wasm32-unknown-unknown --release

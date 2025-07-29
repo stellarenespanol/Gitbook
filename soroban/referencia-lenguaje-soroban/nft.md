@@ -208,10 +208,10 @@ pub enum DataKey {
 }
 
 #[contract]
-pub struct mynft;
+pub struct Mynft;
 
 #[contractimpl]
-impl mynft {
+impl Mynft {
     pub fn __constructor(e: &Env, owner: Address) {
         e.storage().instance().set(&DataKey::Owner, &owner);
         Base::set_metadata(
@@ -234,7 +234,7 @@ impl mynft {
 // `#[default_impl]` macro does this for you. This example showcases
 // what is happening under the hood when you use `#[default_impl]` macro.
 #[contractimpl]
-impl NonFungibleToken for ExampleContract {
+impl NonFungibleToken for Mynft {
     type ContractType = Consecutive;
 
     fn balance(e: &Env, owner: Address) -> u32 {
@@ -288,10 +288,10 @@ impl NonFungibleToken for ExampleContract {
     }
 }
 
-impl NonFungibleConsecutive for mynft {}
+impl NonFungibleConsecutive for Mynft {}
 
 #[contractimpl]
-impl NonFungibleBurnable for mynft {
+impl NonFungibleBurnable for Mynft {
     fn burn(e: &Env, from: Address, token_id: u32) {
         Self::ContractType::burn(e, &from, token_id);
     }
@@ -300,6 +300,8 @@ impl NonFungibleBurnable for mynft {
         Self::ContractType::burn_from(e, &spender, &from, token_id);
     }
 }
+
+
 ```
 
 ## 🖼️ Explicación del Contrato mynft (NFT Consecutivo)
@@ -452,7 +454,59 @@ Esto indica que el contrato utiliza el módulo _Consecutive_, que permite:
 * Piensa en este contrato como una **fábrica de obras de arte digitales** que puede crear muchas piezas a la vez, entregarlas a quien tú quieras, y también destruirlas si ya no quieres que existan.
 * Todo está bajo el control del **creador original (owner)**.
 
-**EN PROCESO**
+### Compilación del contrato
 
+Nos ubicamos dentro de ../stellar-contracts/examples/mynft allí en consola ejecutamos:
 
+```bash
+cargo build --target wasm32v1-none --release
+```
+
+<figure><img src="../../.gitbook/assets/image (104).png" alt=""><figcaption></figcaption></figure>
+
+### Despliegue del contrato
+
+Para **Linux y Mac** el salto de línea de la instrucción es con el carácter " \ " para **Windows** con el carácter " \` "
+
+stellar contract deploy \*\
+\--wasm ../../target/wasm32v1-none/release/mynft.wasm \*\
+\--source developer \*\
+\--network testnet \*\
+\--alias MyNft \*\
+\-- \*\
+\--owner \<owner\_address>
+
+<figure><img src="../../.gitbook/assets/image (105).png" alt=""><figcaption></figcaption></figure>
+
+### Haciendo un mint con una cuenta no valida
+
+```bash
+stellar contract invoke *
+--id MyNft *
+--source  <not_owner_account> *
+--network testnet *
+-- *
+batch_mint *
+--to <destination_account> *
+--amount 1
+```
+
+<figure><img src="../../.gitbook/assets/image (106).png" alt=""><figcaption></figcaption></figure>
+
+### Haciendo un mint con una cuenta valida
+
+```
+stellar contract invoke *
+--id MyNft *
+--source  <owner_account> *
+--network testnet *
+-- *
+batch_mint *
+--to <destination_account> *
+--amount 1
+```
+
+<figure><img src="../../.gitbook/assets/image (107).png" alt=""><figcaption></figcaption></figure>
+
+Obtenemos el primer consecutivo que es el 0 y ya tenemos nuestro NFT 😃
 
